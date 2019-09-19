@@ -6,8 +6,8 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import SignupForm, NewGameForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-
-from .models import Game, Photo, Park
+from django.contrib.auth.models import User
+from .models import Game, Photo, Park, Profile
 
 import uuid
 import boto3
@@ -108,14 +108,17 @@ def games_detail(request, game_id):
   return render(request, 'games/detail.html', { 'game': game })
 
 @login_required
-def join_game(request, profile_id, game_id):
+def assoc_game(request, profile_id, game_id):
   Profile.objects.get(id=profile_id).games.add(game_id)
-  return redirect('profile', profile_id=profile_id)
+  print("FUNC IS RUNNING")
+  print(game_id, "========")
+  print(Profile.objects.get(id=profile_id).games.all())
+  return redirect('profile')
 
 @login_required
 def leave_game(request, profile_id, game_id):
   Profile.objects.get(id=profile_id).games.remove(game_id)
-  return redirect('profile', profile_id=profile_id)
+  return redirect('profile')
 
 @login_required
 def add_photo(request, profile_id):

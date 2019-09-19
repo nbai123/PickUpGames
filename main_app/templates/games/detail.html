@@ -9,15 +9,26 @@
     <div class="card">
       <div class="card-content">
         <span class="card-title">{{ game.name }}</span>
-        <p>Location: {{ game.location }}</p>
+        <p>Location: {{ game.park }}</p>
         <p>Date: {{ game.date }}</p>
         <p>Time: {{ game.time }}</p>
-        <p>Count: {{ game.count }}</p>
+        <p>Max Players: {{ game.max_player }}</p>
+        <p>Players: {% for profile in game.profile_set.all %} {{ game.profile.name }} {% endfor %}</p>
+        
       </div>
       <div class="card-action">
         <a href="{% url 'games_update' game.id %}">Edit</a>
         <a href="{% url 'games_delete' game.id %}">Delete</a>
-        <a href="">Join</a>
+        {% if game.profile_set.all.count < game.max_player %}
+    
+            <form action="{% url 'assoc_game' user.profile.id game.id  %}" method="post">
+                {% csrf_token %}
+              <button type="submit" class="btn">Join</button>
+            </form>
+
+        {% else %}
+          <h5>Game is full</h5>
+        {% endif %}
       </div>
     </div>
 </div>

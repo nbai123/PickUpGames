@@ -25,9 +25,8 @@ class Game(models.Model):
     park = models.ForeignKey(Park, on_delete=models.CASCADE)
     date = models.DateField()
     time = models.TimeField()
-    count = models.IntegerField()
+    max_player = models.IntegerField()
     game = models.CharField(max_length=100)
-    
     # def __str__(self):
     #     return self.park
 
