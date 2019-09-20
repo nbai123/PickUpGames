@@ -29,4 +29,4 @@ class NewGameForm(forms.ModelForm):
 
     class Meta:
         model = Game
-        fields = ('date', 'time', 'count')
+        fields = ('park', 'date', 'time', 'max_player')
